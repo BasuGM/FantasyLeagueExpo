@@ -32,7 +32,26 @@ const UpcomingMatchesScreen = () => {
       .catch((error) => {
         console.error(error);
       });
+
   }, []);
+
+  const matchDetails = (id) => {
+    const access_token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm1vYmlsZV9udW1iZXIiOiI5MDAwMzI0MjM0IiwiaXNUZW1wVXNlciI6ZmFsc2UsInRlYW1fbmFtZSI6IkZqZ2tpIiwiaWF0IjoxNjIzNTAwNzAyLCJleHAiOjEwMjYzNTAwNzAyLCJhdWQiOiIxMiIsImlzcyI6IkxlYWd1ZSBYIn0.40ZTfIvkGhfrL5t5x3ACaAjVAVAW9TViVj-SCeDIiSc';
+
+  axios
+    .get(`http://15.206.110.130:5001/squad/players?match_id=${id}`, {
+      headers: {
+        'x-access-token': `${access_token}`,
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
 
   const renderItem = (item) => {
     return (
@@ -47,6 +66,7 @@ const UpcomingMatchesScreen = () => {
           backgroundColor: '#77acf1',
           borderRadius: 10,
         }}
+        onPress={() => matchDetails(item.id)}
       >
         {/* Top Container  */}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -117,10 +137,13 @@ const UpcomingMatchesScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+        <View style={{backgroundColor: '#3c8dad', height: 60, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 32, fontWeight: 'bold', color: '#125d98'}}>Upcoming Matches</Text>   
+        </View>
       <FlatList
         data={data}
         renderItem={({item}) => renderItem(item)}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
