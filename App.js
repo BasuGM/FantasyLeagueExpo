@@ -10,7 +10,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="UpcomingMatches">
+      <Stack.Navigator initialRouteName="UpcomingMatches" screenOptions={{headerShown: false}}>
         <Stack.Screen
           name="UpcomingMatches"
           component={UpcomingMatchesScreen}
@@ -22,7 +22,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 20,
     flex: 1,
+    width: '100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
