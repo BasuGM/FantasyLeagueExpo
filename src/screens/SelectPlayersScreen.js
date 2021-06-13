@@ -6,9 +6,10 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  TouchableHighlight,
+  ToastAndroid
 } from 'react-native';
 import axios from 'axios';
+import {AntDesign} from '@expo/vector-icons';
 
 import CheckBoxCustom from '../components/CheckBoxCustom';
 
@@ -39,39 +40,38 @@ const SelectPlayers = ({navigation, route}) => {
   }, []);
 
   const renderItem = (item) => {
-
     const addPlayer = () => {
-      
-      // let tempArray = selectedPlayers
-      // console.log(`Add Player: ${item.id}`)
-      // for(let i = 0; i < tempArray.length; i++ ) {
-      //   if ( item.id === tempArray[i].id ) {
-      //     // console.log(tempArray[i].id + ': ' + tempArray[i].name)
-      //     console.log("Player Already exists")
-      //   } else {
-      //     setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}])
-      //     console.log(selectedPlayers)
-      //   }
-      // }
-      setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}])
-      console.log(selectedPlayers)
-    }
+      let tempArray = selectedPlayers;
+
+      for (let i = 0; i < tempArray.length; i++) {
+        if (item.id === tempArray[i].id) {
+          // console.warn(`Player Already Exists`)
+          ToastAndroid.show(`Player Already Exists`, ToastAndroid.SHORT);
+          return;
+        }
+      }
+      setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}]);
+      ToastAndroid.show(`Player Added: ${item.name}`, ToastAndroid.SHORT);
+      // console.log(selectedPlayers);
+    };
 
     const removePlayer = () => {
-      let tempArray = selectedPlayers
-      // console.log(`Remove Player: ${item.id}`)
-      
-      for(let i = 0; i < tempArray.length; i++ ) {
-        if ( item.id === tempArray[i].id ) {
+      let tempArray = selectedPlayers;
+      // console.log(`Remove Player: ${item.id}`);
+
+      for (let i = 0; i < tempArray.length; i++) {
+        if (item.id === tempArray[i].id) {
           // console.log(tempArray[i].id + ': ' + tempArray[i].name)
-          setSelectedPlayers(tempArray.splice(i))
-          console.log(selectedPlayers)
-        } else {
-          console.log("Player not available")
+          setSelectedPlayers(tempArray.splice(i));
+          // console.warn(`Player Removed: ${item.name}`)
+          ToastAndroid.show(`Player Removed: ${item.name}`, ToastAndroid.SHORT);
+          return;
         }
       }
 
-    }
+      ToastAndroid.show(`Player Doesn't Exist`, ToastAndroid.SHORT);
+      // console.warn("Player Doesn't Exist");
+    };
 
     return (
       <TouchableOpacity
@@ -87,8 +87,8 @@ const SelectPlayers = ({navigation, route}) => {
           borderRadius: 10,
         }}
         onPress={() => {
-          removePlayer()
-          }}
+          removePlayer();
+        }}
       >
         <View
           style={{
@@ -131,14 +131,15 @@ const SelectPlayers = ({navigation, route}) => {
                 width: 30,
                 borderRadius: 30,
                 backgroundColor: '#dddddd',
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
               onPress={() => {
                 setSelection(!isSelected);
-                addPlayer()
+                addPlayer();
               }}
             >
-              {isSelected && <CheckBoxCustom val={false} />}
-              {!isSelected && <CheckBoxCustom val={true} />}
+              <AntDesign name="pluscircleo" size={24} color="black" />
             </TouchableOpacity>
           </View>
         </View>
@@ -167,6 +168,20 @@ const SelectPlayers = ({navigation, route}) => {
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
       />
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          bottom: 50,
+          right: 30,
+          borderRadius: 50,
+          backgroundColor: '#fff5eb',
+        }}
+        onPress={() => {
+          console.log(selectedPlayers);
+        }}
+      >
+        <AntDesign name="pluscircleo" size={50} color="black" />
+      </TouchableOpacity>
     </View>
   );
 };
