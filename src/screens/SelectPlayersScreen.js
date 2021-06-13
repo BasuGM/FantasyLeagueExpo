@@ -247,10 +247,10 @@ const SelectPlayers = ({navigation, route}) => {
     assignTeamsForPlayers();
 
     console.log('Team Metrics:');
-    console.log(teamRestrictions);
+    // console.log(teamRestrictions);
 
     for (let i = 0; i < tempArray.length; i++) {
-      console.log(`${tempArray[i].id} ${tempArray[i].name}`);
+      // console.log(`${tempArray[i].id} ${tempArray[i].name}`);
     }
 
     console.log(`\n`);
@@ -264,7 +264,11 @@ const SelectPlayers = ({navigation, route}) => {
       str2 = str2 + `${selectedPlayers[i].id} ${selectedPlayers[i].name}\n`
     }
 
-    console.log(str2)
+    // console.log(str2)
+
+    let isTeamValid = teamRestrictions.noOfPlayers == 11 && teamRestrictions.allrounders <= 4 && 3 <= teamRestrictions.batsman <= 6 && 3 <= teamRestrictions.bowlers <= 6 && 1 <= teamRestrictions.wicketKeepers <= 5 && teamRestrictions.teamA <= 7 && teamRestrictions.teamB <= 7 && teamRestrictions.creditsUsed <= 100
+
+    console.log(isTeamValid)
 
     let str =  `Your Team Players are: \n${str2} \nYour Team Has: 
     No Of Players: ${teamRestrictions.noOfPlayers}
@@ -274,7 +278,7 @@ const SelectPlayers = ({navigation, route}) => {
     Wicket-Keepers: ${teamRestrictions.wicketKeepers}
     Team A: ${teamRestrictions.teamA}
     Team B: ${teamRestrictions.teamB}
-    Credits Used: ${teamRestrictions.batsman}
+    Credits Used: ${teamRestrictions.creditsUsed}
     \n\nAllowed Limits Are: 
     No Of Players: 11
     Batsman: 3 - 6 
@@ -283,7 +287,10 @@ const SelectPlayers = ({navigation, route}) => {
     Wicket-Keepers: 1 - 5
     Max Players From Each Team: 7
     Credits Used: 100
+
+    ${isTeamValid ? `Your team is Valid` : `Your team is Invalid`}
     `;
+
 
     Alert.alert('Constraints', str, [
       {
