@@ -16,6 +16,17 @@ const SelectPlayers = ({navigation, route}) => {
   const [isSelected, setSelection] = useState();
   const [selectedPlayers, setSelectedPlayers] = useState([]);
 
+  let teamRestrictions = {
+    batsman: 0,
+    bowlers: 0,
+    wicketKeepers: 0,
+    allrounders: 0,
+    teamA: 0,
+    teamB: 0,
+    noOfPlayers: 0,
+    creditsUsed: 0,
+  }
+
   const [teamPlayers, setTeamPlayers] = useState([])
 
   const {id} = route.params;
@@ -165,20 +176,17 @@ const SelectPlayers = ({navigation, route}) => {
       for (let j = 0; j < tempArray2.length; j++) {
         if (tempArray[i].id == tempArray2[j].id) {
           finArray = [...finArray, tempArray2[j]];
-          // console.log(tempArray2[j])
         }
       }
     }
 
     return finArray
-    // console.log(finArray);
 
   }
 
   const assignRolesForPlayers = () => {
 
     let tempArray = addPlayersToArray()
-    // console.log(tempArray)
 
     let noOfBatsman = 0;
     let noOfBowlers = 0;
@@ -204,7 +212,11 @@ const SelectPlayers = ({navigation, route}) => {
       }
     }
 
-    // console.log(`Batsman: ${noOfBatsman} \n Bowlers: ${noOfBowlers} \n Wicket-Keepers: ${noOfWicketKeepers} \n All-Rounders: ${noOfAllRounders} `)
+    console.log(`Batsman: ${noOfBatsman} \nBowlers: ${noOfBowlers} \nWicket-Keepers: ${noOfWicketKeepers} \nAll-Rounders: ${noOfAllRounders} `)
+    teamRestrictions.batsman = noOfBatsman
+    teamRestrictions.bowlers = noOfBowlers
+    teamRestrictions.allrounders = noOfAllRounders
+    teamRestrictions.wicketKeepers = noOfWicketKeepers
   };
 
   const assignTeamsForPlayers = () => {
@@ -231,7 +243,11 @@ const SelectPlayers = ({navigation, route}) => {
     // console.log(teamTwo)
     // console.log("\n")
 
-    // console.log(`Team A: ${teamOne.length} \n Team B: ${teamTwo.length}`)    
+    // console.log(`Team A: ${teamOne.length} \nTeam B: ${teamTwo.length}`)   
+    // setTeamMetrics({...teamMetrics, teamA: teamOne.length, teamB: teamTwo.length })
+    // console.log(teamMetrics)
+    teamRestrictions.teamA = teamOne.length
+    teamRestrictions.teamB = teamTwo.length 
   }
 
   const checkCreditRequirements = () => {
@@ -244,21 +260,21 @@ const SelectPlayers = ({navigation, route}) => {
     }
     
     console.log(creditSum)
+    teamRestrictions.creditsUsed = creditSum
+    // setTeamMetrics({...teamMetrics, creditsUsed: creditSum })
+    // console.log(teamMetrics)
   }
 
   const checkForRules = () => {
     let tempArray = selectedPlayers;
-
-    // const playerCount = tempArray.length;
-
-    // console.warn(
-    //   `You've ${playerCount} players. You need ${11 - playerCount} more.`
-    // );
+    teamRestrictions.noOfPlayers = tempArray.length
 
     checkCreditRequirements()
     assignRolesForPlayers();
     assignTeamsForPlayers()
 
+    console.log("Team Metrics:")
+    console.log(teamRestrictions)
 
     for (let i = 0; i < tempArray.length; i++) {
       console.log(`${tempArray[i].id} ${tempArray[i].name}`);
