@@ -6,10 +6,29 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ToastAndroid,
 } from 'react-native';
 
 const DisplayTeam = ({navigation, route}) => {
   const {players, captain, vicecaptain} = route.params;
+
+  let tempArray = players;
+
+  // for (let i = 0; i < tempArray.length; i++) {
+  //   if (captain.id === tempArray[i].id) {
+  //     tempArray = tempArray.splice(i);
+  //     ToastAndroid.show(`Player Removed: ${captain.name}`, ToastAndroid.SHORT);
+  //     // return;
+  //   }
+  // }
+
+  // for (let i = 0; i < tempArray.length; i++) {
+  //   if (vicecaptain.id === tempArray[i].id) {
+  //     tempArray = tempArray.splice(i);
+  //     ToastAndroid.show(`Player Removed: ${vicecaptain.name}`, ToastAndroid.SHORT);
+  //     // return;
+  //   }
+  // }
 
   // console.log("Players: ")
   // console.log(players)
@@ -22,64 +41,69 @@ const DisplayTeam = ({navigation, route}) => {
 
   const renderItem = (item) => {
     return (
-      <TouchableOpacity
-        style={{
-          width: 350,
-          height: 100,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderWidth: 0.5,
-          borderColor: 'grey',
-          margin: 10,
-          backgroundColor: '#a7c4bc',
-          borderRadius: 10,
-        }}
-        onPress={() => {
-          navigation.navigate('DisplayTeam', {
-            players: players,
-            captain: captain,
-            vicecaptain: item,
-          });
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            width: '100%',
-          }}
-        >
-          <Image
-            style={{width: 60, height: 60}}
-            source={{uri: item.team_logo}}
-          />
-          <View style={{width: '60%'}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#03256c'}}>
-              {item.short_name}
-            </Text>
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
-              {item.role}
-            </Text>
-            <Text style={{fontSize: 14, color: '#2541b2'}}>
-              {item.team_short_name}
-            </Text>
-          </View>
-          <View
+      <View>
+        { item.id !== captain.id && item.id !== vicecaptain.id &&
+          <TouchableOpacity
             style={{
-              width: '10%',
-              justifyContent: 'center',
+              width: 350,
+              height: 100,
               alignItems: 'center',
+              justifyContent: 'center',
+              borderWidth: 0.5,
+              borderColor: 'grey',
+              margin: 10,
+              backgroundColor: '#a7c4bc',
+              borderRadius: 10,
             }}
           >
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
-              Cr
-            </Text>
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
-              {item.event_player_credit}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                width: '100%',
+              }}
+            >
+              <Image
+                style={{width: 60, height: 60}}
+                source={{uri: item.team_logo}}
+              />
+              <View style={{width: '60%'}}>
+                <Text
+                  style={{fontSize: 18, fontWeight: 'bold', color: '#03256c'}}
+                >
+                  {item.short_name}
+                </Text>
+                <Text
+                  style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}
+                >
+                  {item.role}
+                </Text>
+                <Text style={{fontSize: 14, color: '#2541b2'}}>
+                  {item.team_short_name}
+                </Text>
+              </View>
+              <View
+                style={{
+                  width: '10%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}
+                >
+                  Cr
+                </Text>
+                <Text
+                  style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}
+                >
+                  {item.event_player_credit}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        }
+      </View>
     );
   };
 
@@ -96,13 +120,6 @@ const DisplayTeam = ({navigation, route}) => {
           margin: 10,
           backgroundColor: '#a7c4bc',
           borderRadius: 10,
-        }}
-        onPress={() => {
-          navigation.navigate('DisplayTeam', {
-            players: players,
-            captain: captain,
-            vicecaptain: item,
-          });
         }}
       >
         <View
@@ -161,23 +178,35 @@ const DisplayTeam = ({navigation, route}) => {
           Final Team
         </Text>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Text style={{fontSize: 48, fontWeight: 'bold', color: '#03256c'}}>
-        {'  ' }C: 
+          {'  '}C:
         </Text>
         {renderCaptain(captain)}
       </View>
-      
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Text style={{fontSize: 48, fontWeight: 'bold', color: '#03256c'}}>
-          VC: 
+          VC:
         </Text>
         {renderCaptain(vicecaptain)}
       </View>
-      
+
       <Text style={{fontSize: 36, fontWeight: 'bold', color: '#03256c'}}>
-        Other Players:  
-        </Text>
+        Other Players:
+      </Text>
       <FlatList
         data={players}
         renderItem={({item}) => renderItem(item)}
