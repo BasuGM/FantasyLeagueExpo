@@ -6,12 +6,14 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  CheckBox,
 } from 'react-native';
 import axios from 'axios';
 
+import CheckBoxCustom from '../components/CheckBoxCustom'
+
 const SelectPlayers = ({navigation, route}) => {
   const [players, setPlayers] = useState(null);
+  const [isSelected, setSelection] = useState([true, true]);
 
   const {id} = route.params;
 
@@ -75,10 +77,13 @@ const SelectPlayers = ({navigation, route}) => {
             </Text>
           </View>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontSize: 12, fontWeight: 'bold', color: '#2541b2'}}>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
+              Cr
+            </Text>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
               {item.event_player_credit}
             </Text>
-            <CheckBox />
+            <CheckBoxCustom />
           </View>
         </View>
       </TouchableOpacity>
