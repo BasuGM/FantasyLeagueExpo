@@ -204,8 +204,47 @@ const SelectPlayers = ({navigation, route}) => {
       }
     }
 
-    console.log(`${noOfBatsman} ${noOfBowlers} ${noOfWicketKeepers} ${noOfAllRounders} `)
+    // console.log(`Batsman: ${noOfBatsman} \n Bowlers: ${noOfBowlers} \n Wicket-Keepers: ${noOfWicketKeepers} \n All-Rounders: ${noOfAllRounders} `)
   };
+
+  const assignTeamsForPlayers = () => {
+
+    let tempArray = addPlayersToArray()
+    const teamName = tempArray[0].team_short_name
+
+    let teamOne = []
+    let teamTwo = []
+
+    for (let i = 0; i < tempArray.length; i++) {
+      if( tempArray[i].team_short_name === teamName ) {
+        teamOne = [...teamOne, tempArray[i] ]
+      } else {
+        teamTwo = [...teamTwo, tempArray[i] ]
+      }
+    }
+
+    // console.log("Team A")
+    // console.log(teamOne)
+    // console.log("\n")
+
+    // console.log("Team B")
+    // console.log(teamTwo)
+    // console.log("\n")
+
+    // console.log(`Team A: ${teamOne.length} \n Team B: ${teamTwo.length}`)    
+  }
+
+  const checkCreditRequirements = () => {
+
+    let tempArray = addPlayersToArray()
+    let creditSum = 0
+
+    for (let i = 0; i < tempArray.length; i++) {
+      creditSum = creditSum + tempArray[i].event_player_credit
+    }
+    
+    console.log(creditSum)
+  }
 
   const checkForRules = () => {
     let tempArray = selectedPlayers;
@@ -216,7 +255,10 @@ const SelectPlayers = ({navigation, route}) => {
     //   `You've ${playerCount} players. You need ${11 - playerCount} more.`
     // );
 
+    checkCreditRequirements()
     assignRolesForPlayers();
+    assignTeamsForPlayers()
+
 
     for (let i = 0; i < tempArray.length; i++) {
       console.log(`${tempArray[i].id} ${tempArray[i].name}`);
