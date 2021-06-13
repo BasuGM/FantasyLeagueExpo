@@ -52,7 +52,7 @@ const DisplayTeam = ({navigation, route}) => {
               borderWidth: 0.5,
               borderColor: 'grey',
               margin: 10,
-              backgroundColor: '#a7c4bc',
+              backgroundColor: '#00adb5',
               borderRadius: 10,
             }}
           >
@@ -69,16 +69,16 @@ const DisplayTeam = ({navigation, route}) => {
               />
               <View style={{width: '60%'}}>
                 <Text
-                  style={{fontSize: 18, fontWeight: 'bold', color: '#03256c'}}
+                  style={{fontSize: 18, fontWeight: 'bold', color: '#aad8d3'}}
                 >
                   {item.short_name}
                 </Text>
                 <Text
-                  style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}
+                  style={{fontSize: 14, fontWeight: 'bold', color: '#ffdf6b'}}
                 >
                   {item.role}
                 </Text>
-                <Text style={{fontSize: 14, color: '#2541b2'}}>
+                <Text style={{fontSize: 14, color: '#8ab6d6'}}>
                   {item.team_short_name}
                 </Text>
               </View>
@@ -118,7 +118,7 @@ const DisplayTeam = ({navigation, route}) => {
           borderWidth: 0.5,
           borderColor: 'grey',
           margin: 10,
-          backgroundColor: '#a7c4bc',
+          backgroundColor: '#00adb5',
           borderRadius: 10,
         }}
       >
@@ -134,13 +134,13 @@ const DisplayTeam = ({navigation, route}) => {
             source={{uri: item.team_logo}}
           />
           <View style={{width: '60%'}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#03256c'}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#aad8d3'}}>
               {item.short_name}
             </Text>
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#ffdf6b'}}>
               {item.role}
             </Text>
-            <Text style={{fontSize: 14, color: '#2541b2'}}>
+            <Text style={{fontSize: 14, color: '#8ab6d6'}}>
               {item.team_short_name}
             </Text>
           </View>
@@ -174,7 +174,7 @@ const DisplayTeam = ({navigation, route}) => {
           alignItems: 'center',
         }}
       >
-        <Text style={{fontSize: 32, fontWeight: 'bold', color: '#03256c'}}>
+        <Text style={{fontSize: 32, fontWeight: 'bold', color: '#393e46'}}>
           Final Team
         </Text>
       </View>
@@ -185,7 +185,7 @@ const DisplayTeam = ({navigation, route}) => {
           alignItems: 'center',
         }}
       >
-        <Text style={{fontSize: 48, fontWeight: 'bold', color: '#03256c'}}>
+        <Text style={{fontSize: 48, fontWeight: 'bold', color: '#393e46'}}>
           {'  '}C:
         </Text>
         {renderCaptain(captain)}
@@ -198,13 +198,13 @@ const DisplayTeam = ({navigation, route}) => {
           alignItems: 'center',
         }}
       >
-        <Text style={{fontSize: 48, fontWeight: 'bold', color: '#03256c'}}>
+        <Text style={{fontSize: 48, fontWeight: 'bold', color: '#393e46'}}>
           VC:
         </Text>
         {renderCaptain(vicecaptain)}
       </View>
 
-      <Text style={{fontSize: 36, fontWeight: 'bold', color: '#03256c'}}>
+      <Text style={{fontSize: 36, fontWeight: 'bold', color: '#393e46'}}>
         Other Players:
       </Text>
       <FlatList
@@ -224,5 +224,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#eeeeee'
   },
 });
