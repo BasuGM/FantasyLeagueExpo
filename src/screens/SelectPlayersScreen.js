@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ToastAndroid,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import {AntDesign} from '@expo/vector-icons';
@@ -25,9 +26,9 @@ const SelectPlayers = ({navigation, route}) => {
     teamB: 0,
     noOfPlayers: 0,
     creditsUsed: 0,
-  }
+  };
 
-  const [teamPlayers, setTeamPlayers] = useState([])
+  const [teamPlayers, setTeamPlayers] = useState([]);
 
   const {id} = route.params;
 
@@ -56,37 +57,27 @@ const SelectPlayers = ({navigation, route}) => {
 
       for (let i = 0; i < tempArray.length; i++) {
         if (item.id === tempArray[i].id) {
-
-          // console.warn(`Player Already Exists`)
           ToastAndroid.show(`Player Already Exists`, ToastAndroid.SHORT);
           return;
-        
         }
       }
 
       setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}]);
       ToastAndroid.show(`Player Added: ${item.name}`, ToastAndroid.SHORT);
-      // console.log(selectedPlayers);
     };
 
     const removePlayer = () => {
       let tempArray = selectedPlayers;
-      // console.log(`Remove Player: ${item.id}`);
 
       for (let i = 0; i < tempArray.length; i++) {
         if (item.id === tempArray[i].id) {
-
-          // console.log(tempArray[i].id + ': ' + tempArray[i].name)
           setSelectedPlayers(tempArray.splice(i));
-          // console.warn(`Player Removed: ${item.name}`)
           ToastAndroid.show(`Player Removed: ${item.name}`, ToastAndroid.SHORT);
           return;
-        
         }
       }
 
       ToastAndroid.show(`Player Doesn't Exist`, ToastAndroid.SHORT);
-      // console.warn("Player Doesn't Exist");
     };
 
     return (
@@ -164,7 +155,6 @@ const SelectPlayers = ({navigation, route}) => {
   };
 
   const addPlayersToArray = () => {
-    
     let tempArray = selectedPlayers;
     let tempArray2 = players;
 
@@ -180,13 +170,11 @@ const SelectPlayers = ({navigation, route}) => {
       }
     }
 
-    return finArray
-
-  }
+    return finArray;
+  };
 
   const assignRolesForPlayers = () => {
-
-    let tempArray = addPlayersToArray()
+    let tempArray = addPlayersToArray();
 
     let noOfBatsman = 0;
     let noOfBowlers = 0;
@@ -212,75 +200,90 @@ const SelectPlayers = ({navigation, route}) => {
       }
     }
 
-    console.log(`Batsman: ${noOfBatsman} \nBowlers: ${noOfBowlers} \nWicket-Keepers: ${noOfWicketKeepers} \nAll-Rounders: ${noOfAllRounders} `)
-    teamRestrictions.batsman = noOfBatsman
-    teamRestrictions.bowlers = noOfBowlers
-    teamRestrictions.allrounders = noOfAllRounders
-    teamRestrictions.wicketKeepers = noOfWicketKeepers
+    // console.log(`Batsman: ${noOfBatsman} \nBowlers: ${noOfBowlers} \nWicket-Keepers: ${noOfWicketKeepers} \nAll-Rounders: ${noOfAllRounders} `)
+    teamRestrictions.batsman = noOfBatsman;
+    teamRestrictions.bowlers = noOfBowlers;
+    teamRestrictions.allrounders = noOfAllRounders;
+    teamRestrictions.wicketKeepers = noOfWicketKeepers;
   };
 
   const assignTeamsForPlayers = () => {
+    let tempArray = addPlayersToArray();
+    const teamName = tempArray[0].team_short_name;
 
-    let tempArray = addPlayersToArray()
-    const teamName = tempArray[0].team_short_name
-
-    let teamOne = []
-    let teamTwo = []
+    let teamOne = [];
+    let teamTwo = [];
 
     for (let i = 0; i < tempArray.length; i++) {
-      if( tempArray[i].team_short_name === teamName ) {
-        teamOne = [...teamOne, tempArray[i] ]
+      if (tempArray[i].team_short_name === teamName) {
+        teamOne = [...teamOne, tempArray[i]];
       } else {
-        teamTwo = [...teamTwo, tempArray[i] ]
+        teamTwo = [...teamTwo, tempArray[i]];
       }
     }
 
-    // console.log("Team A")
-    // console.log(teamOne)
-    // console.log("\n")
-
-    // console.log("Team B")
-    // console.log(teamTwo)
-    // console.log("\n")
-
-    // console.log(`Team A: ${teamOne.length} \nTeam B: ${teamTwo.length}`)   
-    // setTeamMetrics({...teamMetrics, teamA: teamOne.length, teamB: teamTwo.length })
-    // console.log(teamMetrics)
-    teamRestrictions.teamA = teamOne.length
-    teamRestrictions.teamB = teamTwo.length 
-  }
+    teamRestrictions.teamA = teamOne.length;
+    teamRestrictions.teamB = teamTwo.length;
+  };
 
   const checkCreditRequirements = () => {
-
-    let tempArray = addPlayersToArray()
-    let creditSum = 0
+    let tempArray = addPlayersToArray();
+    let creditSum = 0;
 
     for (let i = 0; i < tempArray.length; i++) {
-      creditSum = creditSum + tempArray[i].event_player_credit
+      creditSum = creditSum + tempArray[i].event_player_credit;
     }
-    
-    console.log(creditSum)
-    teamRestrictions.creditsUsed = creditSum
-    // setTeamMetrics({...teamMetrics, creditsUsed: creditSum })
-    // console.log(teamMetrics)
-  }
+
+    // console.log(creditSum)
+    teamRestrictions.creditsUsed = creditSum;
+  };
 
   const checkForRules = () => {
     let tempArray = selectedPlayers;
-    teamRestrictions.noOfPlayers = tempArray.length
 
-    checkCreditRequirements()
+    teamRestrictions.noOfPlayers = tempArray.length;
+    checkCreditRequirements();
     assignRolesForPlayers();
-    assignTeamsForPlayers()
+    assignTeamsForPlayers();
 
-    console.log("Team Metrics:")
-    console.log(teamRestrictions)
+    console.log('Team Metrics:');
+    console.log(teamRestrictions);
 
     for (let i = 0; i < tempArray.length; i++) {
       console.log(`${tempArray[i].id} ${tempArray[i].name}`);
     }
 
     console.log(`\n`);
+  };
+
+  const finalCheck = () => {
+    let str = `Your Team Has: 
+    \nNo Of Players: ${teamRestrictions.noOfPlayers}
+    \nBatsman: ${teamRestrictions.batsman} 
+    \nBowlers: ${teamRestrictions.bowlers} 
+    \nAll-Rounders: ${teamRestrictions.allrounders} 
+    \nWicket-Keepers: ${teamRestrictions.wicketKeepers}
+    \nTeam A: ${teamRestrictions.teamA}
+    \nTeam B: ${teamRestrictions.teamB}
+    \nCredits Used: ${teamRestrictions.batsman}
+    \n\nAllowed Limits Are: 
+    \nNo Of Players: 11
+    \nBatsman: 3 - 6 
+    \nBowlers: 3 - 6 
+    \nAll-Rounders: 0 - 4 
+    \nWicket-Keepers: 1 - 5
+    \nMax Players From Each Team: 7
+    \nCredits Used: 100
+    `;
+
+    Alert.alert('Constraints', str, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
   };
 
   return (
@@ -314,6 +317,7 @@ const SelectPlayers = ({navigation, route}) => {
         }}
         onPress={() => {
           checkForRules();
+          finalCheck();
         }}
       >
         <AntDesign name="pluscircleo" size={50} color="black" />
