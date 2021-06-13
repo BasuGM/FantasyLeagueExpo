@@ -4,13 +4,21 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import UpcomingMatchesScreen from './src/screens/UpcomingMatchesScreen';
+import SelectPlayersScreen from './src/screens/SelectPlayersScreen';
 
 export default function App() {
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="UpcomingMatches" screenOptions={{headerShown: false}}>
+      <Stack.Navigator
+        initialRouteName="UpcomingMatches"
+        screenOptions={{headerShown: false}}
+      >
+        <Stack.Screen
+          name="SelectPlayers"
+          component={SelectPlayersScreen}
+        />
         <Stack.Screen
           name="UpcomingMatches"
           component={UpcomingMatchesScreen}
