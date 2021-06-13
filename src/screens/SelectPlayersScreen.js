@@ -1,26 +1,33 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  CheckBox,
+} from 'react-native';
 import axios from 'axios';
 
-const SelectPlayers = () => {
+const SelectPlayers = ({navigation, route}) => {
   const [players, setPlayers] = useState(null);
+
+  const {id} = route.params;
+
+  console.log(id);
 
   useEffect(() => {
     const access_token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm1vYmlsZV9udW1iZXIiOiI5MDAwMzI0MjM0IiwiaXNUZW1wVXNlciI6ZmFsc2UsInRlYW1fbmFtZSI6IkZqZ2tpIiwiaWF0IjoxNjIzNTAwNzAyLCJleHAiOjEwMjYzNTAwNzAyLCJhdWQiOiIxMiIsImlzcyI6IkxlYWd1ZSBYIn0.40ZTfIvkGhfrL5t5x3ACaAjVAVAW9TViVj-SCeDIiSc';
 
-    // http://15.206.110.130:5001/matches/upcoming-matches
-
-    // http://15.206.110.130:5001/squad/players?match_id=6971
-
     axios
-      .get(`http://15.206.110.130:5001/squad/players?match_id=6440`, {
+      .get(`http://15.206.110.130:5001/squad/players?match_id=${id}`, {
         headers: {
           'x-access-token': `${access_token}`,
         },
       })
       .then((res) => {
-        //   console.log(res.data);
         setPlayers(res.data);
         console.log(players);
       })
@@ -33,24 +40,66 @@ const SelectPlayers = () => {
     return (
       <TouchableOpacity
         style={{
-          width: 300,
+          width: 350,
+          height: 100,
           alignItems: 'center',
           justifyContent: 'center',
           borderWidth: 0.5,
           borderColor: 'grey',
           margin: 10,
-          backgroundColor: '#77acf1',
+          backgroundColor: '#b2b8a3',
           borderRadius: 10,
         }}
-        onPress={() => console.log(item.id)}
+        onPress={() => console.log(item.player_id)}
       >
-        <Text>{item.name}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            width: '100%',
+          }}
+        >
+          <Image
+            style={{width: 60, height: 60}}
+            source={{uri: item.team_logo}}
+          />
+          <View style={{width: '60%'}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#03256c'}}>
+              {item.short_name}
+            </Text>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
+              {item.role}
+            </Text>
+            <Text style={{fontSize: 14, color: '#2541b2'}}>
+              {item.team_short_name}
+            </Text>
+          </View>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 12, fontWeight: 'bold', color: '#2541b2'}}>
+              {item.event_player_credit}
+            </Text>
+            <CheckBox />
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          backgroundColor: '#b2b8a3',
+          height: 60,
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{fontSize: 32, fontWeight: 'bold', color: '#03256c'}}>
+          Select Players
+        </Text>
+      </View>
       <FlatList
         data={players}
         renderItem={({item}) => renderItem(item)}
@@ -68,5 +117,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff5eb',
   },
 });

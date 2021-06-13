@@ -36,7 +36,8 @@ const UpcomingMatchesScreen = ({ navigation }) => {
   }, []);
 
   const matchDetails = (id) => {
-    navigation.navigate('SelectPlayers')
+    navigation.navigate('SelectPlayers', { id: id })
+    // console.log(id)
   }
 
   const renderItem = (item) => {
