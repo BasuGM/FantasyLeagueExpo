@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
 
 const SelectCaptainScreen = ({navigation, route}) => {
   const {players} = route.params;

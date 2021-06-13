@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity, Image} from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
 
 const SelectViceCaptainScreen = ({navigation, route}) => {
   const {players, captain} = route.params;
