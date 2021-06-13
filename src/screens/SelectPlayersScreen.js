@@ -6,17 +6,17 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import axios from 'axios';
 import {AntDesign} from '@expo/vector-icons';
-
-import CheckBoxCustom from '../components/CheckBoxCustom';
 
 const SelectPlayers = ({navigation, route}) => {
   const [players, setPlayers] = useState(null);
   const [isSelected, setSelection] = useState();
   const [selectedPlayers, setSelectedPlayers] = useState([]);
+
+  const [teamPlayers, setTeamPlayers] = useState([])
 
   const {id} = route.params;
 
@@ -45,11 +45,14 @@ const SelectPlayers = ({navigation, route}) => {
 
       for (let i = 0; i < tempArray.length; i++) {
         if (item.id === tempArray[i].id) {
+
           // console.warn(`Player Already Exists`)
           ToastAndroid.show(`Player Already Exists`, ToastAndroid.SHORT);
           return;
+        
         }
       }
+
       setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}]);
       ToastAndroid.show(`Player Added: ${item.name}`, ToastAndroid.SHORT);
       // console.log(selectedPlayers);
@@ -61,11 +64,13 @@ const SelectPlayers = ({navigation, route}) => {
 
       for (let i = 0; i < tempArray.length; i++) {
         if (item.id === tempArray[i].id) {
+
           // console.log(tempArray[i].id + ': ' + tempArray[i].name)
           setSelectedPlayers(tempArray.splice(i));
           // console.warn(`Player Removed: ${item.name}`)
           ToastAndroid.show(`Player Removed: ${item.name}`, ToastAndroid.SHORT);
           return;
+        
         }
       }
 
@@ -132,7 +137,7 @@ const SelectPlayers = ({navigation, route}) => {
                 borderRadius: 30,
                 backgroundColor: '#dddddd',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
               onPress={() => {
                 setSelection(!isSelected);
@@ -145,6 +150,79 @@ const SelectPlayers = ({navigation, route}) => {
         </View>
       </TouchableOpacity>
     );
+  };
+
+  const addPlayersToArray = () => {
+    
+    let tempArray = selectedPlayers;
+    let tempArray2 = players;
+
+    let finArray = [];
+
+    for (let i = 0; i < tempArray.length; i++) {
+      tempArray[i].id;
+
+      for (let j = 0; j < tempArray2.length; j++) {
+        if (tempArray[i].id == tempArray2[j].id) {
+          finArray = [...finArray, tempArray2[j]];
+          // console.log(tempArray2[j])
+        }
+      }
+    }
+
+    return finArray
+    // console.log(finArray);
+
+  }
+
+  const assignRolesForPlayers = () => {
+
+    let tempArray = addPlayersToArray()
+    // console.log(tempArray)
+
+    let noOfBatsman = 0;
+    let noOfBowlers = 0;
+    let noOfWicketKeepers = 0;
+    let noOfAllRounders = 0;
+
+    for (let i = 0; i < tempArray.length; i++) {
+      switch (tempArray[i].role) {
+        case 'Batsman':
+          noOfBatsman++;
+          break;
+        case 'Wicket-Keeper':
+          noOfWicketKeepers++;
+          break;
+        case 'All-Rounder':
+          noOfAllRounders++;
+          break;
+        case 'Bowler':
+          noOfBowlers++;
+          break;
+        default:
+          break;
+      }
+    }
+
+    console.log(`${noOfBatsman} ${noOfBowlers} ${noOfWicketKeepers} ${noOfAllRounders} `)
+  };
+
+  const checkForRules = () => {
+    let tempArray = selectedPlayers;
+
+    // const playerCount = tempArray.length;
+
+    // console.warn(
+    //   `You've ${playerCount} players. You need ${11 - playerCount} more.`
+    // );
+
+    assignRolesForPlayers();
+
+    for (let i = 0; i < tempArray.length; i++) {
+      console.log(`${tempArray[i].id} ${tempArray[i].name}`);
+    }
+
+    console.log(`\n`);
   };
 
   return (
@@ -177,7 +255,7 @@ const SelectPlayers = ({navigation, route}) => {
           backgroundColor: '#fff5eb',
         }}
         onPress={() => {
-          console.log(selectedPlayers);
+          checkForRules();
         }}
       >
         <AntDesign name="pluscircleo" size={50} color="black" />
