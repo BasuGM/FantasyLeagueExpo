@@ -257,23 +257,32 @@ const SelectPlayers = ({navigation, route}) => {
   };
 
   const finalCheck = () => {
-    let str = `Your Team Has: 
-    \nNo Of Players: ${teamRestrictions.noOfPlayers}
-    \nBatsman: ${teamRestrictions.batsman} 
-    \nBowlers: ${teamRestrictions.bowlers} 
-    \nAll-Rounders: ${teamRestrictions.allrounders} 
-    \nWicket-Keepers: ${teamRestrictions.wicketKeepers}
-    \nTeam A: ${teamRestrictions.teamA}
-    \nTeam B: ${teamRestrictions.teamB}
-    \nCredits Used: ${teamRestrictions.batsman}
+
+    let str2 = ''
+
+    for (let i = 0; i < selectedPlayers.length; i++) {
+      str2 = str2 + `${selectedPlayers[i].id} ${selectedPlayers[i].name}\n`
+    }
+
+    console.log(str2)
+
+    let str =  `Your Team Players are: \n${str2} \nYour Team Has: 
+    No Of Players: ${teamRestrictions.noOfPlayers}
+    Batsman: ${teamRestrictions.batsman} 
+    Bowlers: ${teamRestrictions.bowlers} 
+    All-Rounders: ${teamRestrictions.allrounders} 
+    Wicket-Keepers: ${teamRestrictions.wicketKeepers}
+    Team A: ${teamRestrictions.teamA}
+    Team B: ${teamRestrictions.teamB}
+    Credits Used: ${teamRestrictions.batsman}
     \n\nAllowed Limits Are: 
-    \nNo Of Players: 11
-    \nBatsman: 3 - 6 
-    \nBowlers: 3 - 6 
-    \nAll-Rounders: 0 - 4 
-    \nWicket-Keepers: 1 - 5
-    \nMax Players From Each Team: 7
-    \nCredits Used: 100
+    No Of Players: 11
+    Batsman: 3 - 6 
+    Bowlers: 3 - 6 
+    All-Rounders: 0 - 4 
+    Wicket-Keepers: 1 - 5
+    Max Players From Each Team: 7
+    Credits Used: 100
     `;
 
     Alert.alert('Constraints', str, [
