@@ -25,9 +25,9 @@ const UpcomingMatchesScreen = ({ navigation }) => {
         },
       })
       .then((res) => {
-        console.log(res.data.matches.cricket);
+        // console.log(res.data.matches.cricket);
         setData(res.data.matches.cricket);
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.error(error);

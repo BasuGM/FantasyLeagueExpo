@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, CheckBox} from 'react-native';
 
-const CheckBoxCustom = () => {
-  const [isSelected, setSelection] = useState(false);
+const CheckBoxCustom = ({ val }) => {
+  const [isSelected, setSelection] = useState(val);
 
   return (
     <View style={styles.container}>
-      <CheckBox value={isSelected} onValueChange={setSelection} />
+      <CheckBox value={isSelected} disabled onValueChange={setSelection} />
     </View>
   );
 };

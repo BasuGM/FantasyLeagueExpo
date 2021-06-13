@@ -6,18 +6,17 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 import axios from 'axios';
 
-import CheckBoxCustom from '../components/CheckBoxCustom'
+import CheckBoxCustom from '../components/CheckBoxCustom';
 
 const SelectPlayers = ({navigation, route}) => {
   const [players, setPlayers] = useState(null);
   const [isSelected, setSelection] = useState([true, true]);
 
   const {id} = route.params;
-
-  console.log(id);
 
   useEffect(() => {
     const access_token =
@@ -31,7 +30,7 @@ const SelectPlayers = ({navigation, route}) => {
       })
       .then((res) => {
         setPlayers(res.data);
-        console.log(players);
+        // console.log(players);
       })
       .catch((error) => {
         console.error(error);
@@ -52,7 +51,7 @@ const SelectPlayers = ({navigation, route}) => {
           backgroundColor: '#b2b8a3',
           borderRadius: 10,
         }}
-        onPress={() => console.log(item.player_id)}
+        onPress={() => {}}
       >
         <View
           style={{
@@ -76,14 +75,31 @@ const SelectPlayers = ({navigation, route}) => {
               {item.team_short_name}
             </Text>
           </View>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{
+              width: '10%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
               Cr
             </Text>
             <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
               {item.event_player_credit}
             </Text>
-            <CheckBoxCustom />
+            <TouchableOpacity
+              style={{
+                height: 30,
+                width: 30,
+                borderRadius: 30,
+                backgroundColor: '#dddddd',
+              }}
+              onPress={() => console.log(item.player_id)}
+            >
+              {true && <CheckBoxCustom val={false} />}
+              {/* {true && <CheckBoxCustom val={true} />} */}
+            </TouchableOpacity>
           </View>
         </View>
       </TouchableOpacity>
