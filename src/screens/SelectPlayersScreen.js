@@ -14,7 +14,8 @@ import CheckBoxCustom from '../components/CheckBoxCustom';
 
 const SelectPlayers = ({navigation, route}) => {
   const [players, setPlayers] = useState(null);
-  const [isSelected, setSelection] = useState([true, true]);
+  const [isSelected, setSelection] = useState();
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
 
   const {id} = route.params;
 
@@ -38,6 +39,40 @@ const SelectPlayers = ({navigation, route}) => {
   }, []);
 
   const renderItem = (item) => {
+
+    const addPlayer = () => {
+      
+      // let tempArray = selectedPlayers
+      // console.log(`Add Player: ${item.id}`)
+      // for(let i = 0; i < tempArray.length; i++ ) {
+      //   if ( item.id === tempArray[i].id ) {
+      //     // console.log(tempArray[i].id + ': ' + tempArray[i].name)
+      //     console.log("Player Already exists")
+      //   } else {
+      //     setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}])
+      //     console.log(selectedPlayers)
+      //   }
+      // }
+      setSelectedPlayers([...selectedPlayers, {id: item.id, name: item.name}])
+      console.log(selectedPlayers)
+    }
+
+    const removePlayer = () => {
+      let tempArray = selectedPlayers
+      // console.log(`Remove Player: ${item.id}`)
+      
+      for(let i = 0; i < tempArray.length; i++ ) {
+        if ( item.id === tempArray[i].id ) {
+          // console.log(tempArray[i].id + ': ' + tempArray[i].name)
+          setSelectedPlayers(tempArray.splice(i))
+          console.log(selectedPlayers)
+        } else {
+          console.log("Player not available")
+        }
+      }
+
+    }
+
     return (
       <TouchableOpacity
         style={{
@@ -51,7 +86,9 @@ const SelectPlayers = ({navigation, route}) => {
           backgroundColor: '#b2b8a3',
           borderRadius: 10,
         }}
-        onPress={() => {}}
+        onPress={() => {
+          removePlayer()
+          }}
       >
         <View
           style={{
@@ -95,10 +132,13 @@ const SelectPlayers = ({navigation, route}) => {
                 borderRadius: 30,
                 backgroundColor: '#dddddd',
               }}
-              onPress={() => console.log(item.player_id)}
+              onPress={() => {
+                setSelection(!isSelected);
+                addPlayer()
+              }}
             >
-              {true && <CheckBoxCustom val={false} />}
-              {/* {true && <CheckBoxCustom val={true} />} */}
+              {isSelected && <CheckBoxCustom val={false} />}
+              {!isSelected && <CheckBoxCustom val={true} />}
             </TouchableOpacity>
           </View>
         </View>
