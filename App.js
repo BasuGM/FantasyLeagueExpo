@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import UpcomingMatchesScreen from './src/screens/UpcomingMatchesScreen';
 import SelectPlayersScreen from './src/screens/SelectPlayersScreen';
+import DisplayTeamScreen from './src/screens/DisplayTeamScreen';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -22,6 +23,10 @@ export default function App() {
         <Stack.Screen
           name="UpcomingMatches"
           component={UpcomingMatchesScreen}
+        />
+        <Stack.Screen
+          name="DisplayTeam"
+          component={DisplayTeamScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

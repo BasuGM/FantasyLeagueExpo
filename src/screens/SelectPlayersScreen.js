@@ -246,7 +246,7 @@ const SelectPlayers = ({navigation, route}) => {
     assignRolesForPlayers();
     assignTeamsForPlayers();
 
-    console.log('Team Metrics:');
+    // console.log('Team Metrics:');
     // console.log(teamRestrictions);
 
     for (let i = 0; i < tempArray.length; i++) {
@@ -256,7 +256,7 @@ const SelectPlayers = ({navigation, route}) => {
     console.log(`\n`);
   };
 
-  const finalCheck = () => {
+  const dialogueBox = () => {
 
     let str2 = ''
 
@@ -291,14 +291,28 @@ const SelectPlayers = ({navigation, route}) => {
     ${isTeamValid ? `Your team is Valid` : `Your team is Invalid`}
     `;
 
+    let arr = addPlayersToArray()
+    console.log(arr)
 
     Alert.alert('Constraints', str, [
       {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
+        text: 'Clear',
+        onPress: () => {
+          if(isTeamValid) {
+            console.log("true (")
+          } else {
+            ToastAndroid.show(`Team is not Valid`, ToastAndroid.SHORT);
+          }
+        },
         style: 'cancel',
       },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+      {text: 'OK', onPress: () => {
+        if(isTeamValid) {
+          navigation.navigate('DisplayTeam', { players: arr })
+        } else {
+          ToastAndroid.show(`Team is not Valid`, ToastAndroid.SHORT);
+        }
+      }},
     ]);
   };
 
@@ -333,7 +347,7 @@ const SelectPlayers = ({navigation, route}) => {
         }}
         onPress={() => {
           checkForRules();
-          finalCheck();
+          dialogueBox();
         }}
       >
         <AntDesign name="pluscircleo" size={50} color="black" />
