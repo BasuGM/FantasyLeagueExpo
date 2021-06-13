@@ -92,12 +92,12 @@ const DisplayTeam = ({navigation, route}) => {
                 <Text
                   style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}
                 >
-                  Cr
+                  {' '}
                 </Text>
                 <Text
                   style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}
                 >
-                  {item.event_player_credit}
+                  {' '}
                 </Text>
               </View>
             </View>
@@ -152,10 +152,10 @@ const DisplayTeam = ({navigation, route}) => {
             }}
           >
             <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
-              Cr
+              {' '}
             </Text>
             <Text style={{fontSize: 14, fontWeight: 'bold', color: '#2541b2'}}>
-              {item.event_player_credit}
+              {' '}
             </Text>
           </View>
         </View>
