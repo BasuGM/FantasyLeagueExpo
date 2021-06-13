@@ -308,7 +308,7 @@ const SelectPlayers = ({navigation, route}) => {
       },
       {text: 'OK', onPress: () => {
         if(isTeamValid) {
-          navigation.navigate('DisplayTeam', { players: arr })
+          navigation.navigate('SelectCaptain', { players: arr })
         } else {
           ToastAndroid.show(`Team is not Valid`, ToastAndroid.SHORT);
         }
