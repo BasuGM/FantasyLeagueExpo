@@ -1,21 +1,28 @@
-import React from "react";
-import { 
-    View,
-    Text,
-    StyleSheet
-} from "react-native";
+import React from 'react';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
-const ReduxSetupScreen = (props) => (
+import { addition, substraction } from '../store/actions'
+
+const ReduxSetupScreen = (props) => {
+  
+  const data = useSelector((state) => state.counter )
+  const dispatch = useDispatch()
+
+  return (
     <View style={styles.container}>
-        <Text>ReduxSetupScreen</Text>
+      <Button title="Add" onPress={() => dispatch(addition())} />
+      <Text>{data}</Text>
+      <Button title="Substract" onPress={() => dispatch(substraction())} />
     </View>
-    )
+  );
+};
 export default ReduxSetupScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
