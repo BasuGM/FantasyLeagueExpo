@@ -8,6 +8,7 @@ import SelectPlayersScreen from './src/screens/SelectPlayersScreen';
 import SelectCaptainScreen from './src/screens/SelectCaptainScreen';
 import SelectViceCaptainScreen from './src/screens/SelectViceCaptainScreen';
 import DisplayTeamScreen from './src/screens/DisplayTeamScreen';
+import ReduxSetupScreen from './src/screens/ReduxSetupScreen';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -15,7 +16,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="UpcomingMatches"
+        initialRouteName="ReduxSetup"
         screenOptions={{headerShown: false}}
       >
         <Stack.Screen
@@ -37,6 +38,10 @@ export default function App() {
         <Stack.Screen
           name="DisplayTeam"
           component={DisplayTeamScreen}
+        />
+        <Stack.Screen
+          name="ReduxSetup"
+          component={ReduxSetupScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
